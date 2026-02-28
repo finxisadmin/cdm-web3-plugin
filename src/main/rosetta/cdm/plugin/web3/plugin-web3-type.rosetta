@@ -1,0 +1,44 @@
+namespace cdm.plugin.web3 : <"Web3 plugin namespace for inclusion of blockchain and smart contract functions in the CDM.">
+version "${project.version}"
+
+type Web3NetworkConfig: <"Configuration for connecting to a blockchain network.">
+    web3Network Web3NetworkEnum (1..1) <"Target blockchain network.">
+    web3RpcUrl string (0..1) <"Custom RPC endpoint URL. Defaults to public endpoint for the network.">
+    web3ChainId int (0..1) <"Custom chain ID override.">
+
+type Web3TransactionReceipt: <"Confirmation of a blockchain transaction.">
+    web3TxHash string (1..1) <"Transaction hash (0x-prefixed hex).">
+    web3TxStatus Web3TransactionStatusEnum (1..1)
+    web3BlockNumber int (0..1) <"Block number the transaction was included in.">
+    web3BlockHash string (0..1) <"Hash of the block.">
+    web3GasUsed int (0..1) <"Gas consumed by the transaction.">
+    web3EffectiveGasPrice int (0..1) <"Effective gas price in wei.">
+    web3ContractAddress string (0..1) <"Address of deployed contract, if applicable.">
+    web3Error string (0..1) <"Revert reason or error message if failed.">
+
+type Web3EventRecord: <"A CDM event hash recorded on a blockchain for immutability.">
+    web3TxHash string (1..1) <"Transaction hash of the recording.">
+    web3EventHash string (1..1) <"Keccak-256 hash of the CDM event JSON.">
+    web3BlockNumber int (1..1)
+    web3Timestamp int (1..1) <"Block timestamp in epoch seconds.">
+    web3Network Web3NetworkEnum (1..1)
+    web3ContractAddress string (0..1) <"Registry contract address.">
+
+type Web3ContractCall: <"Parameters for calling a smart contract function.">
+    web3ContractAddress string (1..1) <"Address of the deployed contract (0x-prefixed).">
+    web3FunctionName string (1..1) <"Solidity function name to call.">
+    web3FunctionParams string (0..*) <"ABI-encoded function parameters as strings.">
+    web3CallType Web3CallTypeEnum (1..1) <"Call (read-only) or Send (state-changing).">
+    web3Network Web3NetworkConfig (1..1)
+
+type Web3ContractResult: <"Result of a smart contract function call.">
+    web3Success boolean (1..1)
+    web3ResultData string (0..1) <"ABI-decoded return value as string.">
+    web3TxReceipt Web3TransactionReceipt (0..1) <"Transaction receipt if call type was Send.">
+    web3Error string (0..1) <"Error message if the call failed.">
+
+type Web3Balance: <"Native token balance for an address.">
+    web3Address string (1..1) <"Wallet address queried.">
+    web3BalanceWei string (1..1) <"Balance in wei as a decimal string (to avoid overflow).">
+    web3BalanceEther number (1..1) <"Balance in ether (or native token).">
+    web3Network Web3NetworkEnum (1..1)

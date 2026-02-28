@@ -1,0 +1,22 @@
+namespace cdm.plugin.web3 : <"Web3 plugin namespace for inclusion of blockchain and smart contract functions in the CDM.">
+version "${project.version}"
+
+enum Web3NetworkEnum: <"Supported blockchain networks.">
+    Ethereum <"Ethereum mainnet (chain ID 1).">
+    Sepolia <"Ethereum Sepolia testnet (chain ID 11155111).">
+    Polygon <"Polygon PoS mainnet (chain ID 137).">
+    Arbitrum <"Arbitrum One L2 (chain ID 42161).">
+    Optimism <"Optimism L2 (chain ID 10).">
+    Avalanche <"Avalanche C-Chain (chain ID 43114).">
+    Base <"Base L2 (chain ID 8453).">
+    Localhost <"Local development node (chain ID 31337).">
+
+enum Web3TransactionStatusEnum: <"Status of a blockchain transaction.">
+    Pending <"Transaction submitted but not yet mined.">
+    Confirmed <"Transaction mined and confirmed.">
+    Failed <"Transaction reverted or failed.">
+    Unknown <"Status could not be determined.">
+
+enum Web3CallTypeEnum: <"Type of smart contract interaction.">
+    Call <"Read-only call, no gas cost, no state change.">
+    Send <"State-changing transaction, requires gas and signing.">

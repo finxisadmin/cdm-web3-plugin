@@ -1,0 +1,30 @@
+namespace cdm.plugin.web3 : <"Web3 plugin namespace for inclusion of blockchain and smart contract functions in the CDM.">
+version "${project.version}"
+
+func Web3RecordEvent: <"Record a CDM event hash on a blockchain for immutable audit. Computes the Keccak-256 hash of the event JSON and writes it to a registry smart contract. Returns the transaction receipt and event record.">
+    inputs:
+        web3EventJson string (1..1) <"CDM event serialized as JSON. Only its hash is stored on-chain.">
+        web3Network Web3NetworkConfig (1..1) <"Target blockchain network.">
+        web3RegistryAddress string (0..1) <"Optional registry contract address. Uses default if omitted.">
+    output:
+        web3EventRecord Web3EventRecord (1..1)
+
+func Web3ReadEvent: <"Read a previously recorded CDM event record from the blockchain by its transaction hash.">
+    inputs:
+        web3TxHash string (1..1) <"Transaction hash of the original recording.">
+        web3Network Web3NetworkConfig (1..1)
+    output:
+        web3EventRecord Web3EventRecord (1..1)
+
+func Web3CallContract: <"Call or send a transaction to a smart contract. Use Call type for read-only queries, Send type for state-changing transactions.">
+    inputs:
+        web3ContractCall Web3ContractCall (1..1)
+    output:
+        web3ContractResult Web3ContractResult (1..1)
+
+func Web3GetBalance: <"Get the native token balance of an address on a given network.">
+    inputs:
+        web3Address string (1..1) <"Wallet address to query (0x-prefixed).">
+        web3Network Web3NetworkConfig (1..1)
+    output:
+        web3Balance Web3Balance (1..1)
